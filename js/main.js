@@ -28,9 +28,10 @@ function fetchBookmark(){
         var name=bookmarks[i].name;
         var Url=bookmarks[i].Url;
         bookmarksResult.innerHTML += `<div class="card bg-light text-dark card-body">`+
-                                      `<h1>`+name+`</h1>`+
-                                      `<a class="btn btn-primary" target="_blank" href="` + Url+ ` ">Visit the site</a>`+
-                                      `<a onclick=deleteBookmark(\"`+Url+`"\) class="btn btn-danger" href="#">Delete</a>`+
+                                      `<h4>`+name+`<small>`+ Url +`</small></h4>`+
+                                      
+                                      `<div class="container "><a class="btn btn-primary good" target="_blank" href="` + Url+ ` ">Visit the site</a>`+
+                                      `<a onclick=deleteBookmark(\"`+Url+`"\) class="btn btn-danger good" href="#">Delete</a></div>`+
                                       `</div>`
     }
 }
