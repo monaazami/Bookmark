@@ -1,12 +1,22 @@
 document.getElementById('myForm').addEventListener("submit", saveBookmark);
-
+// save the site name and URL in local storage
 function saveBookmark(e){
     var siteName=document.getElementById("siteName").value;
     var siteUrl=document.getElementById("siteUrl").value;
+    //validate if the form is empty or unvalide URL
+    if(!siteName||!siteUrl){
+        alert("Please fill the form");
+        return false;
+    }
+    if(!siteUrl.match(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/)){
+        alert("Please fenter a valid URL!");
+        return false;
+    }
     var bookmark={
         name:siteName,
         Url:siteUrl
     }
+    //check if it is the first bookmarked site (bookmarks is empty array)
     if(localStorage.getItem("bookmarks")==null){
         var bookmarks=[];
         bookmarks.push(bookmark);
@@ -16,14 +26,17 @@ function saveBookmark(e){
         bookmarks.push(bookmark);
         localStorage.setItem("bookmarks",JSON.stringify(bookmarks));
     }
+
+
+    // reset the form after submitting data
     document.getElementById("myForm").reset();
     fetchBookmark();
-    
+    // prevent function of default behavior 
     e.preventDefault();
 }
 
 
-
+// delete button
 function deleteBookmark(Url){
     var bookmarks=JSON.parse(localStorage.getItem("bookmarks"));
     for(var i=0;i<bookmarks.length;i++){
@@ -37,6 +50,7 @@ function deleteBookmark(Url){
     fetchBookmark();
 }
 
+// fetch websites from local storage and inject the data in an empty div with bookmarksResult id 
 function fetchBookmark(){
     var bookmarks=JSON.parse(localStorage.getItem("bookmarks"))
     var bookmarksResult=document.getElementById("bookmarksResults");
