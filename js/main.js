@@ -16,12 +16,29 @@ function saveBookmark(e){
         bookmarks.push(bookmark);
         localStorage.setItem("bookmarks",JSON.stringify(bookmarks));
     }
+    document.getElementById("myForm").reset();
+    fetchBookmark();
+    
     e.preventDefault();
 }
 
-function fetchBookmark(){
+
+
+function deleteBookmark(Url){
     var bookmarks=JSON.parse(localStorage.getItem("bookmarks"));
-    console.log(bookmarks);
+    for(var i=0;i<bookmarks.length;i++){
+        if (bookmarks[i].Url===Url){
+            bookmarks.splice(i,1);
+            
+        }
+    }
+    localStorage.setItem("bookmarks",JSON.stringify(bookmarks));
+    document.getElementById("myForm").reset();
+    fetchBookmark();
+}
+
+function fetchBookmark(){
+    var bookmarks=JSON.parse(localStorage.getItem("bookmarks"))
     var bookmarksResult=document.getElementById("bookmarksResults");
     bookmarksResult.innerHTML ="";
     for(var i=0;i<bookmarks.length;i++){
@@ -39,4 +56,3 @@ function fetchBookmark(){
 
 
 
-document.getElementById("bookmarksResults")
